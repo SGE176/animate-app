@@ -1,25 +1,49 @@
-import logo from './logo.svg';
 import './App.css';
+import BarChart from './BarChart';
+import React from 'react';
+import Tree from "./Tree";
+import data from "./data";
+import { Link,BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import { Canvas } from "@react-vertex/core";
+import { useViewportSize } from "@react-vertex/dom-hooks";
+import Scene from "./Scene";
+import Home from './Home';
+import AppNavbar from './Navbar';
+
+function Example() {
+  const { width, height } = useViewportSize();
+
+  return (
+    <Canvas width={width} height={height}>
+      <Scene />
+    </Canvas>
+  );
+}
+
+function TreeNode() {
+  return (
+    <Tree data={data} width={600} height={500} />
+  )
+}
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <AppNavbar />
+        <Switch>
+          <Route path='/' exact={true} component={Home} />
+          <Route path='/barchart' exact={true} component={BarChart} />
+          <Route path='/tree' exact={true} component={TreeNode} />
+          <Route path='/lightorb' exact={true} component={Example} />
+        </Switch>
+      </Router>
   );
 }
 
 export default App;
+
+{/* <div>
+      <BarChart />
+      <Tree data={data} width={600} height={500} />
+      <Example />
+    </div> */}
